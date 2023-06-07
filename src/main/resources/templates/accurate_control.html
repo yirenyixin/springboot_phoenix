@@ -1,0 +1,93 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>精准布控</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/jw/css/index.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/jw/css/magic-check.css}">
+    <script type="text/javascript" th:src="@{/jw/js/jquery-3.3.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/jw/js/index.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/layui/css/layui.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/jsmind/jsmind.css}">
+    <script type="text/javascript" th:src="@{/jsmind/jsmind.draggable.js}"></script>
+    <script type="text/javascript" th:src="@{/jsmind/jsmind.js}"></script>
+    <style type="text/css">
+        #jsmind_container {
+            height: 600px;
+            border: solid 1px #ccc;
+            /*background:#f4f4f4;*/
+            background: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+<div class="policeHead">
+    <img th:src="@{/jw/images/logo.png}"/>
+    <a href="/" class="returnToIndex">返回</a>
+    <table id="demo" lay-filter="test"></table>
+    <div id="jsmind_container"></div>
+</div>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs layui-btn-normal layui-btn-fluid" lay-event="cat">查看</a>
+</script>
+
+<script type="text/javascript" th:src="@{/layui/layui.all.js}"></script>
+<script th:inline="javaScript">
+    layui.use('table', function () {
+        var table = layui.table;
+
+        //第一个实例
+        table.render({
+            elem: '#demo'
+            , height: 312
+            , url: '/monitoringUser'
+            , page: true //开启分页
+            , cols: [[ //表头
+                {field: 'id', title: '身份证号码', fixed: 'left'}
+                , {field: 'trueName', title: '真实姓名'}
+                , {field: 'monitoringTime', title: '布控时间'}
+                , {field: 'monitoringRange', title: '布控范围'}
+                , {fixed: 'right', title: '操作', toolbar: '#barDemo'}
+            ]]
+        });
+
+        table.on('tool(test)', function (obj) {
+            var data = obj.data;
+            if (obj.event === 'cat') {
+                load_jsmind(data.id)
+            }
+        });
+
+    });
+
+    var options = {
+        container: 'jsmind_container',
+        editable: true,
+        theme: 'primary'
+    }
+    var jm = new jsMind(options);
+
+    function load_jsmind(id) {
+        /********** Begin **********/
+        $.ajax({
+            type: "GET",
+            url: "/jsMindInfo",
+            data: {id: id},
+            success: function (res) {
+                var mind = {
+                    meta: {
+                        name: 'demo',
+                        author: 'hizzgdev@163.com',
+                        version: '0.2'
+                    },
+                    format: 'node_array',
+                    data: res.list
+                };
+                jm.show(mind);
+            }
+        });
+
+        /********** End **********/
+    }
+</script>
+</body>
+</html>

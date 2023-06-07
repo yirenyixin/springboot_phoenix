@@ -1,0 +1,22 @@
+drop table  if exists monitoring;
+CREATE TABLE monitoring(id VARCHAR PRIMARY KEY,trueName VARCHAR,monitoringTime VARCHAR,monitoringRange VARCHAR);
+upsert into monitoring values ('421181198902197','向国瑜','2019-8-13','全长沙');
+upsert into monitoring values ('430102198809062','郑小瑛','2017-8-13','全长沙');
+upsert into monitoring values ('431202201704110','宁马','2016-8-13','全长沙');
+upsert into monitoring values ('420704197409160','覃仕平','2008-7-13','全长沙');
+upsert into monitoring values ('420625197212312','戴觉非','2006-8-13','全长沙');
+upsert into monitoring values ('420624199005267','葛理','2018-8-15','全长沙');
+
+drop table if exists eventLog;
+create  table eventLog(id VARCHAR PRIMARY KEY,code VARCHAR,log VARCHAR);
+upsert into eventLog values ('1','420624199005267',	'于2018-8-16 08:41在天河宾馆登记入住');
+upsert into eventLog values ('2','420624199005267',	'于2018-8-17 08:30离开天河宾馆');
+upsert into eventLog values ('3','420624199005267',	'于2018-8-17 13:00在火车站顺心宾馆登记入住');
+upsert into eventLog values ('4','420624199005267',	'于2018-8-17 17:00离开顺心宾馆');
+upsert into eventLog values ('5','420625197212312', '于2009-8-16 14:41现身天河宾馆');
+upsert into eventLog values ('6','420704197409160',	'于2008-7-13 08:30离开天河宾馆');
+upsert into eventLog values ('7','421181198902197',	'于2019-8-13 08:30离开天河宾馆');
+upsert into eventLog values ('8','430102198809062', '于2017-8-13 08:30在天河宾馆登记入住');
+upsert into eventLog values ('9','430102198809062', '于2017-8-14 08:30离开天河宾馆');
+upsert into eventLog values ('10','431202201704110',	'于2016-8-13 08:41在天河宾馆登记入住');
+upsert into eventLog values ('11','431202201704110',	'于2016-8-13 08:30离开天河宾馆');

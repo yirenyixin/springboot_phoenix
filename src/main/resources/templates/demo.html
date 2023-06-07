@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>精准布控</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/jw/css/index.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/jw/css/magic-check.css}">
+    <script type="text/javascript" th:src="@{/jw/js/jquery-3.3.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/jw/js/index.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/layui/css/layui.css}">
+</head>
+<body>
+<div class="policeHead">
+    <img th:src="@{/jw/images/logo.png}"/>
+    <a href="/" class="returnToIndex">返回</a>
+    <table id="demo" lay-filter="test"></table>
+    <div id="jsmind_container"></div>
+</div>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs layui-btn-normal layui-btn-fluid" lay-event="cat">查看</a>
+</script>
+
+<script type="text/javascript" th:src="@{/layui/layui.all.js}"></script>
+<script th:inline="javaScript">
+    layui.use('table', function () {
+        var table = layui.table;
+
+        /********** Begin **********/
+        table.render({
+            elem: '#demo',
+            height: 312,
+            url: '/monitoringUser',
+            page: true,
+            cols: [[
+                {field: 'id', title: '编号', fixed: 'left'},
+                {field: 'trueName', title: '真实姓名'},
+                {field: 'monitoringTime', title: '布控时间'},
+                {field: 'monitoringRange', title: '布控范围'}
+            ]]
+        });
+        /********** End **********/
+    });
+
+</script>
+</body>
+</html>
